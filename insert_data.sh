@@ -28,7 +28,7 @@ cat games.csv | while IFS="," read YEAR ROUND WINNER OPPONENT WINNER_GOALS OPPON
     # Check if game already exists
     GAME_EXISTS=$($PSQL "SELECT game_id FROM games WHERE winner_id=$WINNER_ID AND opponent_id=$OPPONENT_ID AND year=$YEAR AND round='$ROUND' AND winner_goals=$WINNER_GOALS AND opponent_goals=$OPPONENT_GOALS")
     if [[ -z $GAME_EXISTS ]]; then
-      # If game does not exist, insert it
+      # If game does not exist insert it
       $PSQL "INSERT INTO games(winner_id, opponent_id, winner_goals, opponent_goals, year, round) VALUES ($WINNER_ID, $OPPONENT_ID, $WINNER_GOALS, $OPPONENT_GOALS, $YEAR, '$ROUND')"
     else
       echo "Game already exists: Year $YEAR, Round '$ROUND', Teams $WINNER vs $OPPONENT"
